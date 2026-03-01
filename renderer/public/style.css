@@ -1,0 +1,630 @@
+/* ── Reset & Base ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+}
+body {
+  background: #080808;
+  color: #fff;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  overflow-x: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+}
+a {
+  color: #FD7F03;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+  color: #F9500F;
+}
+
+/* ── Volcanic Glossy Buttons ── */
+button {
+  background: rgba(253, 127, 3, 0.15);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-top: 1px solid #FE8105;
+  border-radius: 0;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 13px;
+  margin: 2px;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: all 0.25s ease;
+  box-shadow: none;
+  text-shadow: none;
+}
+button:hover {
+  background: rgba(253, 127, 3, 0.25);
+  color: #fff;
+  border-color: #FE8105;
+  box-shadow: none;
+}
+button:disabled {
+  opacity: 0.4;
+  cursor: default;
+  border-color: #333;
+  color: #666;
+  box-shadow: none;
+  background: #1a1a1a;
+  border-top-color: #333;
+}
+select {
+  background: #0f0f0f;
+  color: #fff;
+  border: 1px solid #333;
+  border-radius: 0;
+  padding: 6px 10px;
+  font-size: 13px;
+}
+select:focus {
+  border-color: #FD7F03;
+  outline: none;
+  box-shadow: 0 0 8px rgba(253, 127, 3, 0.3);
+}
+input[type="text"],
+input[type="password"],
+textarea {
+  background: #0f0f0f;
+  color: #fff;
+  border: 1px solid #333;
+  border-radius: 0;
+  padding: 8px 12px;
+  font-size: 13px;
+  background-image: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 50%);
+}
+input[type="text"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+  border-color: #FD7F03;
+  outline: none;
+  box-shadow: 0 0 8px rgba(253, 127, 3, 0.3);
+}
+input[type="file"] {
+  border-radius: 0;
+}
+
+/* ── Screen Navigation ── */
+.screen-nav {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  gap: 8px;
+  z-index: 9999;
+}
+.screen-nav button {
+  font-size: 20px;
+  padding: 6px 16px;
+}
+
+/* ── Layout ── */
+#header {
+  display: none !important;
+}
+
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+  padding-top: 80px;
+}
+
+/* ── Dimmer & Dialogs ── */
+#dimmer {
+  display: none !important;
+}
+#logindlg,
+#newaccountdlg,
+#lostuserdlg,
+#publishdlg {
+  display: none !important;
+}
+
+/* ── App Screen Management ── */
+.app-container[data-screen="0"] #face0 {
+  display: block !important;
+}
+.app-container[data-screen="0"] #face1 {
+  display: none !important;
+}
+.app-container[data-screen="0"] #contour {
+  display: none !important;
+}
+.app-container[data-screen="0"] #face2 {
+  display: none !important;
+}
+.app-container[data-screen="0"] #face3 {
+  display: none !important;
+}
+.app-container[data-screen="0"] #face4 {
+  display: none !important;
+}
+
+.app-container[data-screen="1"] #face0 {
+  display: none !important;
+}
+.app-container[data-screen="1"] #face1 {
+  display: block !important;
+  margin-top: 20px;
+  order: 2;
+}
+.app-container[data-screen="1"] {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+}
+.app-container[data-screen="1"] #contour {
+  display: flex !important;
+  justify-content: center;
+  order: 1;
+}
+.app-container[data-screen="1"] #ovcanvas {
+  display: none !important;
+}
+.app-container[data-screen="1"] #face2 {
+  display: none !important;
+}
+.app-container[data-screen="1"] #face3 {
+  display: none !important;
+}
+.app-container[data-screen="1"] #face4 {
+  display: none !important;
+}
+
+.app-container[data-screen="2"] #face0 {
+  display: none !important;
+}
+.app-container[data-screen="2"] #face1 {
+  display: none !important;
+}
+.app-container[data-screen="2"] #contour {
+  display: flex !important;
+  justify-content: center;
+}
+.app-container[data-screen="2"] #ovcanvas {
+  display: block !important;
+}
+.app-container[data-screen="2"] #face2 {
+  display: none !important;
+}
+.app-container[data-screen="2"] #face3 {
+  display: none !important;
+}
+.app-container[data-screen="2"] #face4 {
+  display: block !important;
+}
+.app-container[data-screen="2"] #face4 #face2d {
+  display: block !important;
+}
+.app-container[data-screen="2"] #face4 #face3d {
+  display: none !important;
+}
+
+.app-container[data-screen="3"] #face0 {
+  display: none !important;
+}
+.app-container[data-screen="3"] #face1 {
+  display: none !important;
+}
+.app-container[data-screen="3"] #contour {
+  display: none !important;
+}
+.app-container[data-screen="3"] #face2 {
+  display: none !important;
+}
+.app-container[data-screen="3"] #face3 {
+  display: none !important;
+}
+.app-container[data-screen="3"] #face4 {
+  display: flex !important;
+  justify-content: center;
+}
+.app-container[data-screen="3"] #face4 #face2d {
+  display: none !important;
+}
+.app-container[data-screen="3"] #face4 #face3d {
+  display: block !important;
+  width: 100%;
+}
+
+/* ── Phase Containers ── */
+#face0 {
+  text-align: center;
+  padding: 40px;
+}
+#startface h2 {
+  color: #FD7F03;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 24px;
+  text-shadow: 0 0 20px rgba(253, 127, 3, 0.3);
+}
+#startface p {
+  color: #888;
+}
+
+/* ── Upload Drop Zone ── */
+.drop-zone {
+  width: 400px;
+  height: 250px;
+  border: 2px dashed #FD7F03;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 40px auto;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #0a0a0a;
+  position: relative;
+}
+.drop-zone::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 50%);
+  pointer-events: none;
+}
+.drop-zone:hover,
+.drop-zone.dragover {
+  border-color: #FFD900;
+  background: #111;
+  box-shadow: 0 0 25px rgba(253, 127, 3, 0.3), 0 0 8px rgba(255, 217, 0, 0.15);
+}
+.drop-zone p {
+  margin: 8px 0;
+  color: #ccc;
+}
+.drop-zone .icon {
+  font-size: 54px;
+  color: #FD7F03;
+}
+
+/* ── Face Menu ── */
+#facemenu {
+  background: rgba(18, 18, 18, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 2px solid;
+  border-color: rgba(253, 127, 3, 0.3);
+  padding: 16px;
+  margin: 0 auto;
+  text-align: center;
+  max-width: 800px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+#facem {
+  margin-top: 12px;
+  display: inline-block;
+}
+#facem canvas {
+  vertical-align: middle;
+  margin: 2px;
+  border: 1px solid #333;
+}
+#eyesel {
+  font-size: 12px;
+  color: #FFD900;
+  margin: 0 12px;
+  vertical-align: middle;
+  font-weight: bold;
+}
+
+/* ── Contour Canvas Area ── */
+#contour {
+  position: relative;
+  overflow: hidden;
+  background: #000;
+  margin: 0 auto;
+}
+#canvas,
+#ovcanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#ovcanvas {
+  z-index: 2;
+  cursor: crosshair;
+}
+
+/* ── 2D / 3D Sub-phases ── */
+#face2d {
+  position: relative;
+  text-align: center;
+  margin-top: 20px;
+}
+#face3d {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* ── 3D Container ── */
+#glcontainer {
+  display: block;
+  background: #080808;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+}
+#canvas3d {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+#controlblock {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  max-width: 800px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 2px solid;
+  border-color: rgba(253, 127, 3, 0.3);
+  background: rgba(18, 18, 18, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  width: 100%;
+}
+#controlblock.ai-hidden {
+  display: none !important;
+}
+
+/* ── Expression Buttons ── */
+.btn-group h4 {
+  margin: 0 0 8px;
+  font-size: 11px;
+  color: #FD7F03;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.btn-group canvas {
+  vertical-align: middle;
+  margin: 2px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.btn-group canvas:hover {
+  border-color: #FD7F03;
+  box-shadow: 0 0 8px rgba(253, 127, 3, 0.3);
+}
+
+/* ── Song Controls ── */
+.song-controls {
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  padding-left: 20px;
+}
+#ajaxsong {
+  color: #FD7F03;
+  font-size: 12px;
+}
+#play,
+#pause {
+  cursor: pointer;
+  font-size: 24px;
+  color: #FD7F03;
+  vertical-align: middle;
+}
+#play:hover,
+#pause:hover {
+  color: #FE8105;
+  text-shadow: 0 0 8px rgba(254, 129, 5, 0.5);
+}
+#playbutton {
+  display: none;
+}
+
+/* ── Toolbar Buttons ── */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Mouse Hint ── */
+#mousehint {
+  font-size: 12px;
+  color: #888;
+  margin: 8px 0;
+  min-height: 16px;
+  display: block;
+}
+
+/* ── Loading Indicator ── */
+.loading-msg {
+  text-align: center;
+  padding: 40px;
+  color: #FD7F03;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: none;
+}
+.loading-msg .spinner {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #333;
+  border-top-color: #FD7F03;
+  border-radius: 50% !important;
+  animation: spin 0.8s linear infinite;
+  margin-right: 12px;
+  vertical-align: middle;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Hidden Utility Elements ── */
+#work,
+#texcanvas,
+#vigcanvas,
+#snapshot,
+#snapshota,
+#face41 {
+  display: none !important;
+}
+
+/* ── Speak to AI Button ── */
+#speak-to-ai-container {
+  text-align: center;
+  margin-top: 24px;
+}
+#speak-to-ai-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 16px;
+  border: 1px solid #FD7F03;
+  cursor: pointer;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 500;
+  box-shadow: none;
+  background-color: #FD7F03;
+  color: #000;
+}
+.ai-btn-inactive {
+  background: rgba(10, 10, 10, 0.6);
+  color: #FD7F03;
+  border-color: rgba(253, 127, 3, 0.4);
+  backdrop-filter: blur(10px);
+}
+.ai-btn-inactive:hover {
+  background: rgba(253, 127, 3, 0.15);
+  color: #fff;
+  border-color: rgba(253, 127, 3, 0.8);
+  box-shadow: none;
+}
+.ai-btn-active {
+  background: rgba(253, 127, 3, 0.35);
+  color: #fff;
+  border-color: #FE8105;
+  animation: ai-glow 1.5s ease-in-out infinite;
+}
+.ai-btn-active:hover {
+  background: rgba(253, 127, 3, 0.5);
+  color: #fff;
+  border-color: #FFD900;
+}
+@keyframes ai-glow {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+.ai-status-indicator {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #FD7F03;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(10, 10, 10, 0.9);
+  padding: 4px 12px;
+  border: 1px solid rgba(253, 127, 3, 0.4);
+  backdrop-filter: blur(8px);
+}
+.ai-pulse {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: #FD7F03;
+  animation: ai-pulse-anim 1s ease-in-out infinite;
+}
+@keyframes ai-pulse-anim {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(1.5);
+  }
+}
+
+@media (max-width: 800px) {
+  #canvas3d {
+    width: 100%;
+    height: auto;
+  }
+  .drop-zone {
+    width: 100%;
+    max-width: 400px;
+  }
+}
+
+/* ── Screen Navigation Right ── */
+.screen-nav-right {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 16px;
+  z-index: 9999;
+  align-items: center;
+}
+.screen-nav-right span {
+  font-size: 24px;
+  color: #FD7F03;
+  cursor: pointer;
+}
+.screen-nav-right span:hover {
+  color: #FE8105;
+  text-shadow: 0 0 8px rgba(254, 129, 5, 0.5);
+}
+
+/* ── Top Right Controls ── */
+#top-right-controls {
+  position: absolute;
+  top: 48px;
+  right: 13px;
+  display: flex;
+  gap: 16px;
+  z-index: 9999;
+  align-items: center;
+  background: rgba(10, 10, 10, 0.9);
+  padding: 4px 12px;
+  border: 1px solid rgba(253, 127, 3, 0.4);
+  backdrop-filter: blur(8px);
+}
+#top-right-controls span {
+  font-size: 24px;
+  color: #FD7F03;
+  cursor: pointer;
+}
+#top-right-controls span:hover {
+  color: #FE8105;
+  text-shadow: 0 0 8px rgba(254, 129, 5, 0.5);
+}
+
+/* ── Fade-in Animation ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

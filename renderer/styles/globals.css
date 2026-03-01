@@ -1,0 +1,77 @@
+/* ── Volcanic Glossy Global Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0 !important;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background: #080808;
+  color: #ffffff;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#__next {
+  height: 100%;
+  width: 100%;
+  background: transparent !important;
+}
+
+/* Volcanic ambient background glow */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(225, 5, 0, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 30% 80%, rgba(254, 129, 5, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 30% at 70% 90%, rgba(249, 80, 15, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Glass light rays at 45° angles */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(45deg, transparent 48%, rgba(249, 80, 15, 0.03) 49%, rgba(249, 80, 15, 0.03) 51%, transparent 52%),
+    linear-gradient(45deg, transparent 23%, rgba(249, 80, 15, 0.02) 24%, rgba(249, 80, 15, 0.02) 26%, transparent 27%),
+    linear-gradient(-45deg, transparent 38%, rgba(254, 129, 5, 0.02) 39%, rgba(254, 129, 5, 0.02) 41%, transparent 42%),
+    linear-gradient(-45deg, transparent 68%, rgba(254, 129, 5, 0.015) 69%, rgba(254, 129, 5, 0.015) 71%, transparent 72%);
+  pointer-events: none;
+}
+
+/* Selection styling */
+::selection {
+  background: rgba(225, 5, 0, 0.4);
+  color: #fff;
+}
+
+/* Scrollbar volcanic styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #FD7F03;
+  border-radius: 0 !important;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #F9500F;
+}
+
+/* Pulse animation for loading states */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}

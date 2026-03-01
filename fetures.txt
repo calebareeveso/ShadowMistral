@@ -1,0 +1,34 @@
+1. Single-Image 2.5D Avatar Generation
+FEATURE: Transform a single, flat portrait photo into a live, fully-animated 2.5D talking avatar that perfectly visualizes your digital proxy.
+SOLVES PROBLEM: The Friction of Digital Presence. Eliminates the need for 3D scanning, expensive mocap rigs, or specialized equipment to build a responsive virtual clone.
+TECHNICAL CHALLENGE: It turns your flat image into a 2.5D face by detecting 71 facial landmarks to deform a base 3D mesh to match your facial geometry, and then projecting your original photo onto that mesh using UV coordinates. It maps lip movements to real-time audio amplitudes.
+
+2. Near-Instant Voice Cloning
+FEATURE: Capture and synthesize an ultra-realistic clone of your voice, retaining your unique vocal timbre from just a brief audio sample.
+SOLVES PROBLEM: Synthetic Uncanny Valley. Prevents your AI proxy from sounding like a generic text-to-speech engine, maintaining a natural, human-like presence in meetings.
+TECHNICAL CHALLENGE: Integrating ElevenLabs' low-latency voice cloning APIs over HTTP/WebSockets, managing streaming audio buffers, and dynamically syncing the audio output byte streams with the UI's facial mesh deformation.
+
+3. Context-Aware Proxy (RAG Memory)
+FEATURE: Feed your digital proxy a summary of Jira tickets, recent commits, and architecture documents so it can autonomously answer routine standup questions in your cloned voice.
+SOLVES PROBLEM: The Flow State Killer. Engineers no longer need to break deep work focus just to give a 30-second status update on a morning call.
+TECHNICAL CHALLENGE: Implementing a local Retrieval-Augmented Generation (RAG) loop to parse incoming meeting audio, embed context via Mistral APIs, and utilize Mistral's reasoning to generate accurate dialog without hallucinating.
+
+4. The "Ping" Failsafe
+FEATURE: If the AI proxy encounters a question outside its context, it politely states "Let me ping them on that" and silently alerts you. Click one button to instantly drop into the call.
+SOLVES PROBLEM: The AI Trust Barrier. Overcomes the fear of deploying AI in professional settings by keeping the human safely in the loop as the ultimate fallback.
+TECHNICAL CHALLENGE: Engineering complex A/V routing via OBS Virtual Camera and BlackHole audio pipelines, orchestrating seamless UI/IPC state handoffs between the autonomous WebGL avatar loop and the live hardware webcam feed.
+
+5. Interactive Transcript Chatting
+FEATURE: Treat your ongoing or past meetings like a live database by chatting directly with the transcript. Ask Mistral questions about what was discussed, decisions made, or what you missed while AFK.
+SOLVES PROBLEM: Context Degradation. Prevents vital technical context from slipping through the cracks during dense discussions and eliminates the distraction of manual note-taking.
+TECHNICAL CHALLENGE: Building a continuous vector embedding pipeline for live audio transcriptions, mapping semantic utterance chunks, and utilizing cosine similarity for high-speed retrieval to pipe into Mistral's context window.
+
+6. Independent Agentic Web Search
+FEATURE: Empowers the AI proxy with the ability to autonomously browse the live internet to retrieve documentation, read API specs, or answer questions requiring up-to-date knowledge.
+SOLVES PROBLEM: AI Knowledge Cutoff. Prevents the meeting proxy from being strictly bottlenecked by its pre-training data or local uploaded files.
+TECHNICAL CHALLENGE: Integrating Stagehand (headless browser automation) with Mistral's system function-calling, enabling dynamic sub-agent orchestration to navigate DOM trees, parse layout logic, and extract targeted answers on the fly from the Node process.
+
+7. Agentic Execution with Claude Code
+FEATURE: Post-meeting, the system parses the transcript, extracts technical action items, and connects directly to your local terminal using Claude Code to autonomously execute tasks, search the codebase, and write code.
+SOLVES PROBLEM: The Post-Meeting Chore List. Eliminates the manual effort required to transfer discussed technical decisions into actual shell commands and repository modifications.
+TECHNICAL CHALLENGE: Establishing a robust IPC bridge between the Electron Main process and local PTY environments, managing child-process lifecycles, parsing recursive ANSI outputs, and actively piping I/O to navigate Anthropic's terminal-native Claude Code TUI execution loop.

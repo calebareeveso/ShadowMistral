@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Claude Code — Terminal</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; background: #0d0d0d; overflow: hidden; }
+
+    #titlebar {
+      height: 36px;
+      background: #1a1a1a;
+      border-bottom: 1px solid #2a2a2a;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      gap: 8px;
+      -webkit-app-region: drag;
+      user-select: none;
+      flex-shrink: 0;
+    }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-red    { background: #ff5f57; }
+    .dot-yellow { background: #febc2e; }
+    .dot-green  { background: #28c840; }
+    #title-text { font-size: 12px; color: #888; margin-left: 6px; font-family: -apple-system, sans-serif; }
+    #status-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #FD7F03; margin-left: auto;
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+    #status-dot.done { background: #28c840; animation: none; opacity: 1; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    #terminal-wrap {
+      position: absolute;
+      top: 36px; left: 0; right: 0; bottom: 0;
+    }
+    .xterm { height: 100% !important; }
+    .xterm-viewport { overflow-y: auto !important; }
+  </style>
+</head>
+<body>
+  <div id="titlebar">
+    <div class="dot dot-red"></div>
+    <div class="dot dot-yellow"></div>
+    <div class="dot dot-green"></div>
+    <span id="title-text">⚙️ Claude Code — Terminal Agent</span>
+    <div id="status-dot"></div>
+  </div>
+  <div id="terminal-wrap"></div>
+
+  <script>
+    const path = require('path')
+    const { ipcRenderer } = require('electron')
+
+    // Load xterm CSS from local node_modules
+    const cssPath = 'file://' + path.join(__dirname, '../node_modules/xterm/css/xterm.css')
+    const link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = cssPath
+    document.head.appendChild(link)
+
+    // Load xterm + fit addon from local node_modules
+    const { Terminal }  = require(path.join(__dirname, '../node_modules/xterm/lib/xterm.js'))
+    const { FitAddon }  = require(path.join(__dirname, '../node_modules/xterm-addon-fit/lib/xterm-addon-fit.js'))
+
+    const term = new Terminal({
+      theme: {
+        background:  '#0d0d0d',
+        foreground:  '#e0e0e0',
+        cursor:      '#FD7F03',
+        black:       '#1a1a1a',
+        brightBlack: '#444444',
+      },
+      fontSize: 13,
+      fontFamily: 'Menlo, Monaco, "Courier New", monospace',
+      convertEol: true,
+      scrollback: 5000,
+      allowTransparency: true,
+    })
+
+    const fitAddon = new FitAddon()
+    term.loadAddon(fitAddon)
+    term.open(document.getElementById('terminal-wrap'))
+    fitAddon.fit()
+
+    window.addEventListener('resize', () => fitAddon.fit())
+
+    // Receive raw pty output (ANSI codes intact) from main process
+    ipcRenderer.on('pty-data', (_e, data) => term.write(data))
+
+    ipcRenderer.on('pty-status', (_e, status) => {
+      if (status === 'done') {
+        document.getElementById('status-dot').classList.add('done')
+      }
+    })
+  </script>
+</body>
+</html>
