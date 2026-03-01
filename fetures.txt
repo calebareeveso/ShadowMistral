@@ -32,3 +32,26 @@ TECHNICAL CHALLENGE: Integrating Stagehand (headless browser automation) with Mi
 FEATURE: Post-meeting, the system parses the transcript, extracts technical action items, and connects directly to your local terminal using Claude Code to autonomously execute tasks, search the codebase, and write code.
 SOLVES PROBLEM: The Post-Meeting Chore List. Eliminates the manual effort required to transfer discussed technical decisions into actual shell commands and repository modifications.
 TECHNICAL CHALLENGE: Establishing a robust IPC bridge between the Electron Main process and local PTY environments, managing child-process lifecycles, parsing recursive ANSI outputs, and actively piping I/O to navigate Anthropic's terminal-native Claude Code TUI execution loop.
+
+---
+
+## Powered by Mistral Models
+Here is a detailed breakdown of how we leverage Mistral's model family (`mistral-large`, `mistral-embed`) across these features:
+
+* **1. Avatar Generation & 2. Voice Cloning**
+  While the visual deformation and voice generation rely on specialized external APIs (Fal.ai and ElevenLabs), Mistral Large acts as the central brain dictating *what* the proxy says. The generated dialog—complete with customized filler words, pauses, and cadence designed to mimic human speech—originates entirely from Mistral Large's output stream, ensuring the avatar's performance feels natural rather than pre-programmed.
+
+* **3. Context-Aware Proxy (RAG Memory)**
+  We utilize `mistral-embed` to create vector embeddings of the user's provided knowledge base (Jira tickets, PRs, architecture docs). During a meeting, when a question is asked, Mistral Embed vectorizes the query to retrieve the most relevant chunks. `mistral-large` then synthesizes this retrieved context to formulate an accurate, non-hallucinated response.
+
+* **4. The "Ping" Failsafe**
+  Mistral Large is explicitly prompted with a system mandate to recognize the boundaries of its retrieved context. Instead of guessing when it lacks information, Mistral utilizes its strong reasoning capabilities to trigger a specific fallback state. It recognizes the knowledge gap, outputs the "ping" dialog, and signals the Electron backend to route the A/V feed back to the human.
+
+* **5. Interactive Transcript Chatting**
+  As the meeting progresses, the continuous audio transcript is chunked, embedded using `mistral-embed`, and stored in a local vector database. When the user queries the transcript, `mistral-large` acts as the conversational interface, scanning the retrieved semantic chunks and providing high-fidelity summaries and answers based strictly on the meeting's historical context.
+
+* **6. Independent Agentic Web Search**
+  Mistral Large acts as the orchestration engine behind the Stagehand headless browser integration. Through native function-calling, Mistral processes the extracted DOM layout (HTML/CSS layout logic) provided by Stagehand, reasons about the visual structure of the page, and autonomously determines the optimal next action (e.g., "click the search bar", "type query", "extract pricing table") to fulfill the user's request.
+
+* **7. Agentic Execution with Claude Code**
+  Post-meeting, `mistral-large-latest` analyzes the entire meeting transcript to extract actionable technical directives. It formats these insights into a structured execution plan and formulates the initial prompts that are sent to the Anthropic terminal agent, effectively acting as the high-level project manager delegating tasks to a specialized coding sub-agent.
